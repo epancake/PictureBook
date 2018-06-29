@@ -1,0 +1,28 @@
+img {
+    height: 25vh;
+}
+
+.photoList {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap 
+}
+
+.index {
+    height: auto;
+    text-align: center
+}
+
+.photoCard {
+    max-width: 15rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 38vh;
+}
+
+.listContainer {
+    display: flex;
+}
+
+
