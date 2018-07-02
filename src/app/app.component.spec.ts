@@ -43,7 +43,7 @@ describe('AppComponent', () => {
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual('Picture Book');
   }));
-  it('should have a 10 pictures', async(() => {
+  it('should have 10 pictures', async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     frontend.performSearch('banana');
