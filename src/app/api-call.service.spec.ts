@@ -43,13 +43,52 @@ describe('ApiCallService', () => {
     backend.verify();
   });
 
-  it('should have 100 pictures in the response', async(() => {
+  it('should have 100 pictures in the response', () => {
     expect(service.response.length).toEqual(0);
     service.flickrAPI('banana').subscribe();
     // tslint:disable-next-line:max-line-length
     backend.expectOne(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=236ee9bd3afee7904f32fae37ab4ea2f&format=json&nojsoncallback=1&tags=banana`)
             .flush(FLICKR_REPONSE);
-
     expect(service.response.length).toEqual(100);
     backend.verify();
+  });
+
+  it('should have 100 pictures in the response', () => {
+    expect(service.response.length).toEqual(0);
+    service.flickrAPI('banana').subscribe();
+    // tslint:disable-next-line:max-line-length
+    backend.expectOne(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=236ee9bd3afee7904f32fae37ab4ea2f&format=json&nojsoncallback=1&tags=banana`)
+            .flush(FLICKR_REPONSE);
+    expect(service.response.length).toEqual(100);
+    backend.verify();
+  });
+
+  it('should have 10 items in the tenPhotos variable', () => {
+    expect(service.response.length).toEqual(0);
+    service.flickrAPI('banana').subscribe();
+    // tslint:disable-next-line:max-line-length
+    backend.expectOne(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=236ee9bd3afee7904f32fae37ab4ea2f&format=json&nojsoncallback=1&tags=banana`)
+            .flush(FLICKR_REPONSE);
+    expect(service.tenPhotos.length).toEqual(10);
+    backend.verify();
+  });
+
+  it('should assign indeces to each of the 10 photos', () => {
+    service.flickrAPI('banana').subscribe();
+    // tslint:disable-next-line:max-line-length
+    backend.expectOne(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=236ee9bd3afee7904f32fae37ab4ea2f&format=json&nojsoncallback=1&tags=banana`)
+            .flush(FLICKR_REPONSE);
+    expect(service.tenPhotos[9].index).toEqual(9);
+    backend.verify();
+  });
+
+  it('should create an alphebatized list of ten photos', () => {
+    service.flickrAPI('banana').subscribe();
+    // tslint:disable-next-line:max-line-length
+    backend.expectOne(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=236ee9bd3afee7904f32fae37ab4ea2f&format=json&nojsoncallback=1&tags=banana`)
+            .flush(FLICKR_REPONSE);
+    expect(service.makeAlphabeticalTenPhotos().length).toEqual(10);
+    expect(service.makeAlphabeticalTenPhotos()[9].title).toBeGreaterThan(service.makeAlphabeticalTenPhotos()[8].title);
+    backend.verify();
+  });
 });

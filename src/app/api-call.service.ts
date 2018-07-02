@@ -11,14 +11,46 @@ export class ApiCallService {
 
   constructor(private _http: HttpClient) { }
   response = [];
+  tenPhotos = [];
+  tenPhotosTitles = [];
 
   flickrAPI(tagname): any {
+    this.tenPhotos = [];
+    this.tenPhotosTitles = [];
     return this._http.get(this.flickrApi + '&tags=' + tagname).pipe(
       tap(data => {
-        const response = data.photos.photo
-        console.log('data', data.photos)
+        this.response = data.photos.photo
+        for (let i = 0; this.tenPhotos.length < 10; i++) {
+          if (!/\d/.test(this.response[i].title) && this.response[i].title) {
+            let score = 0;
+            for (let j = 0; j < this.tenPhotos.length; j++) {
+              if (this.response[i].title === this.tenPhotos[j].title) {
+                score++;
+              }
+            }
+            if (score === 0) {
+              this.tenPhotos.push(this.response[i]);
+              this.tenPhotosTitles.push(this.response[i]);
+            }
+          }
+        }
+        this.tenPhotos.map((photo, i) => photo.index = i);
+        this.makeAlphabeticalTenPhotos();
+        return this.tenPhotos;
       }),
       catchError(this.handleError) );
+  }
+
+  makeAlphabeticalTenPhotos(): any {
+    return this.tenPhotosTitles.sort(function(a, b) {
+      if (a.title < b.title) {
+        return -1;
+      }
+      if (a.title > b.title) {
+        return 1;
+      }
+      return 0;
+    });
   }
 
   private handleError(err) {
@@ -37,51 +69,4 @@ export class ApiCallService {
     return throwError(errorMessage);
   }
 }
-
-// pickTen(): void {
-//   for (let i = 0; this.tenPhotos.length < 10; i++) {
-//     if (!/\d/.test(this.photosData[i].title) && this.photosData[i].title) {
-//       let score = 0;
-//       for (let j = 0; j < this.tenPhotos.length; j++) {
-//         if (this.photosData[i].title === this.tenPhotos[j].title) {
-//           score++;
-//         }
-//       }
-//       if (score === 0) {
-//         this.tenPhotos.push(this.photosData[i]);
-//         this.tenPhotosTitles.push(this.photosData[i]);
-//       }
-//     }
-//   }
-//   this.assignIndexToPics();
-//   this.randomizeTitles();
-//   console.log('tenPhotos', this.tenPhotos);
-//   console.log('tenPhotosTitles', this.tenPhotosTitles);
-// }
-
-// randomizeTitles(): void {
-//   this.tenPhotosTitles.sort(function(a, b) {
-//     if (a.title < b.title) {
-//       return -1;
-//     }
-//     if (a.title > b.title) {
-//       return 1;
-//     }
-//     return 0;
-//   });
-// }
-
-// assignIndexToPics(): void {
-//   let num = 0;
-//   this.tenPhotos.forEach(item => {
-//     item.index = num;
-//     num++;
-//   });
-//   let num2 = 0;
-//   this.tenPhotosTitles.forEach(item => {
-//     item.index = num2;
-//     num2++;
-//   });
-// }
-// }
 

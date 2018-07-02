@@ -41,16 +41,4 @@ describe('AppComponent', () => {
   it(`should have as title 'app'`, async(() => {
     expect(component.title).toEqual('Picture Book');
   }));
-  it('should have 10 pictures', async(() => {
-    fixture.detectChanges();
-    expect(component.photosData.length).toEqual(0);
-    component.performSearch('banana');
-    // tslint:disable-next-line:max-line-length
-    backend.expectOne(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=236ee9bd3afee7904f32fae37ab4ea2f&format=json&nojsoncallback=1&tags=banana`)
-            .flush(FLICKR_REPONSE);
-
-    expect(component.photosData.length).toEqual(100);
-    expect(component.tenPhotos.length).toEqual(10);
-    backend.verify();
-  }));
 });
