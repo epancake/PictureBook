@@ -4,7 +4,7 @@
   <div class="ui-g ui-fluid">
     <div class="ui-g-12 ui-md-4">
         <div class="ui-inputgroup">
-            <button pButton type="button" label="Search" (click)="performSearch(searchTerm)"></button>
+            <button pButton type="button" label="Search" (click)="performSearch(searchTerm.value)"></button>
             <input type="text" pInputText placeholder="Enter Search Term" #searchTerm/>         
         </div>
     </div>
