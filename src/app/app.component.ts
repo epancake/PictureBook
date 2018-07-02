@@ -8,7 +8,7 @@ import { ApiCallService } from './api-call.service';
 })
 
 export class AppComponent {
-  title = 'app';
+  title = 'Picture Book';
   photosData = [];
   tenPhotos = [];
   titles = [];

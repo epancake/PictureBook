@@ -5,10 +5,12 @@ import { map, tap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ApiCallService {
+
   // tslint:disable-next-line:max-line-length
   flickrApi = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=236ee9bd3afee7904f32fae37ab4ea2f&format=json&nojsoncallback=1';
 
   constructor(private _http: HttpClient) { }
+
   flickrAPI(tagname): any {
     return this._http.get(this.flickrApi + '&tags=' + tagname).pipe(
       // tap(data => console.log('All: ' + JSON.stringify(data))),
