@@ -28,4 +28,16 @@ export class AppComponent {
     () => console.log('done')
     );
   }
+
+  onDragStart(event: PointerEvent): void {
+    console.log('got drag start');
+  }
+
+  onDragMove(event: PointerEvent): void {
+    console.log(`got drag move ${Math.round(event.clientX)} ${Math.round(event.clientY)}`);
+  }
+
+  onDragEnd(event: PointerEvent): void {
+    console.log('got drag end');
+  }
 }

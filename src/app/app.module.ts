@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 
 
 import { AppComponent } from './app.component';
+import { DraggableModule } from './draggable/draggable.module';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { AppComponent } from './app.component';
     InputTextModule,
     ButtonModule,
     BrowserAnimationsModule,
+    DraggableModule
   ],
   providers: [
     ApiCallService,

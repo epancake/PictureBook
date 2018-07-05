@@ -11,6 +11,7 @@ export class DraggableDirective {
   @Output() dragMove = new EventEmitter<PointerEvent>();
   @Output() dragEnd = new EventEmitter<PointerEvent>();
 
+
   @HostBinding('class.dragging') dragging = false;
 
   @HostListener('pointerdown', ['$event'])

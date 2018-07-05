@@ -18,8 +18,8 @@ export class ApiCallService {
     this.tenPhotos = [];
     this.tenPhotosTitles = [];
     return this._http.get(this.flickrApi + '&tags=' + tagname).pipe(
-      tap(data => {
-        this.response = data.photos.photo
+      tap(((data: any) => {
+        this.response = data.photos.photo;
         for (let i = 0; this.tenPhotos.length < 10; i++) {
           if (!/\d/.test(this.response[i].title) && this.response[i].title) {
             let score = 0;
@@ -38,7 +38,8 @@ export class ApiCallService {
         this.makeAlphabeticalTenPhotos();
         return this.tenPhotos;
       }),
-      catchError(this.handleError) );
+      catchError(this.handleError) )
+    );
   }
 
   makeAlphabeticalTenPhotos(): any {

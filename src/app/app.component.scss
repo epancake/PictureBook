@@ -25,4 +25,26 @@ img {
     display: flex;
 }
 
+.picture-title {
+    background-color: rgb(182, 67, 67);
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+}
+
+.box {
+    background: #BADA55;
+    border: 1px solid black;
+    padding: 10px 20px;
+    display: inline-block;
+    cursor: move;
+  
+    &.dragging {
+      background: coral;
+    }
+  }
+
+
+
 

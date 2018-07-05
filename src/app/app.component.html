@@ -11,6 +11,10 @@
   </div>
 </div>
 
+<div *ngIf="tenPhotos.length > 1">
+  <button pButton type="button" label='Reset' (click)="resetBoxes"></button>
+</div>
+
 <div class='listContainer'>
   <div class='photoList'>
     <div *ngFor='let photo of tenPhotos'>
@@ -23,11 +27,13 @@
   
   <div class='titleList'>
       <ul *ngFor='let title of tenPhotosTitles'>
-          <li>{{title.title}}</li>
-          <div class="ui-inputgroup">
-            <input type="text" pInputText placeholder="Picture Number" #pictureNumber/>         
-            <button pButton type="button" label="Save" (click)="performSave(pictureNumber)"></button>
-          </div>
+          <li class='picture-title box' appMoveable>{{title.title}}</li>
+          <!-- <div class="ui-inputgroup"> -->
+            <!-- <input type="text" pInputText placeholder="Picture Number" #pictureNumber/>          -->
+            <!-- <button pButton type="button" label="Save" (click)="performSave(pictureNumber)"></button> -->
+          <!-- </div> -->
       </ul>
   </div>
 </div>
+
+
