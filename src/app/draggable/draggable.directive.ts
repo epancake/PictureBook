@@ -1,4 +1,5 @@
-import { Directive, EventEmitter, HostBinding, HostListener, Output } from '@angular/core';
+import { Directive, EventEmitter, HostBinding, HostListener, Output, ViewContainerRef, ContentChild } from '@angular/core';
+import { DraggableHelperDirective } from './draggable-helper.directive';
 
 
 @Directive({
@@ -11,13 +12,16 @@ export class DraggableDirective {
   @Output() dragMove = new EventEmitter<PointerEvent>();
   @Output() dragEnd = new EventEmitter<PointerEvent>();
 
+  // @ContentChild(DraggableHelperDirective) helper: DraggableHelperDirective;
 
   @HostBinding('class.dragging') dragging = false;
 
   @HostListener('pointerdown', ['$event'])
   onPointerDown(event: PointerEvent): void {
     this.dragging = true;
+    event.stopPropagation();
     this.dragStart.emit(event);
+    // this.helper.onDragStart();
   }
 
   @HostListener('document:pointermove', ['$event'])
@@ -35,6 +39,7 @@ export class DraggableDirective {
     }
     this.dragging = false;
     this.dragEnd.emit(event);
+    // this.helper.onDragEnd();
   }
 
 }

@@ -25,15 +25,17 @@
     </div>
   </div>
   
-  <div class='titleList'>
-      <ul *ngFor='let title of tenPhotosTitles'>
-          <li class='picture-title box' appMoveable>{{title.title}}</li>
-          <!-- <div class="ui-inputgroup"> -->
-            <!-- <input type="text" pInputText placeholder="Picture Number" #pictureNumber/>          -->
-            <!-- <button pButton type="button" label="Save" (click)="performSave(pictureNumber)"></button> -->
-          <!-- </div> -->
-      </ul>
-  </div>
+<div class='titleList'>
+    <ul *ngFor='let title of tenPhotosTitles'>
+        <li class='picture-title box' appDraggable>
+              {{title.title}}
+              <div class="picture-title box helper" *appDraggableHelper>
+                  {{title.title}}
+              </div>
+        </li>
+    </ul>
 </div>
+
+
 
 
