@@ -1,4 +1,4 @@
-import { Directive, EventEmitter, HostBinding, HostListener, Output, ViewContainerRef, ContentChild } from '@angular/core';
+import { Directive, EventEmitter, HostBinding, HostListener, Output, ViewContainerRef, ContentChild, ElementRef } from '@angular/core';
 import { DraggableHelperDirective } from './draggable-helper.directive';
 
 
@@ -12,7 +12,8 @@ export class DraggableDirective {
   @Output() dragMove = new EventEmitter<PointerEvent>();
   @Output() dragEnd = new EventEmitter<PointerEvent>();
 
-  // @ContentChild(DraggableHelperDirective) helper: DraggableHelperDirective;
+  constructor(public element: ElementRef) {}
+
 
   @HostBinding('class.dragging') dragging = false;
 
@@ -21,7 +22,6 @@ export class DraggableDirective {
     this.dragging = true;
     event.stopPropagation();
     this.dragStart.emit(event);
-    // this.helper.onDragStart();
   }
 
   @HostListener('document:pointermove', ['$event'])
