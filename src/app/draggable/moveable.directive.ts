@@ -1,4 +1,4 @@
-import { Directive, HostListener, HostBinding } from '@angular/core';
+import { Directive, ElementRef, HostBinding, HostListener, Input } from '@angular/core';
 import { DraggableDirective } from './draggable.directive';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
@@ -12,17 +12,22 @@ interface Position {
 })
 export class MoveableDirective extends DraggableDirective {
   @HostBinding('style.transform') get transform(): SafeStyle {
-      return this.sanitizer.bypassSecurityTrustStyle(
-        `translateX(${this.position.x}px) translateY(${this.position.y}px)`
-      );
+    return this.sanitizer.bypassSecurityTrustStyle(
+      `translateX(${this.position.x}px) translateY(${this.position.y}px)`
+    );
   }
 
-  private position: Position = {x: 0, y: 0};
+  @HostBinding('class.moveable') moveable = true;
+
+  position: Position = {x: 0, y: 0};
 
   private startPosition: Position;
 
-  constructor(private sanitizer: DomSanitizer) {
-    super();
+  // tslint:disable-next-line:no-input-rename
+  @Input('appMoveableReset') reset = false;
+
+  constructor(private sanitizer: DomSanitizer, public element: ElementRef) {
+    super(element);
   }
 
   @HostListener('dragStart', ['$event'])
@@ -41,5 +46,8 @@ export class MoveableDirective extends DraggableDirective {
 
   @HostListener('dragEnd', ['$event'])
   onDragEnd(event: PointerEvent) {
+    if (this.reset) {
+      this.position = {x: 0, y: 0};
+    }
   }
 }

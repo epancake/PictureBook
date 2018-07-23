@@ -34,8 +34,10 @@ export class ApiCallService {
             }
           }
         }
-        this.tenPhotos.map((photo, i) => photo.index = i);
+        this.tenPhotos.map((photo, i) => photo.index = i + 1);
         this.makeAlphabeticalTenPhotos();
+        console.log('tp', this.tenPhotos);
+        console.log('tpt', this.tenPhotosTitles);
         return this.tenPhotos;
       }),
       catchError(this.handleError) )

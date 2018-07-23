@@ -4,36 +4,38 @@
   <div class="ui-g ui-fluid">
     <div class="ui-g-12 ui-md-4">
         <div class="ui-inputgroup">
-            <button pButton type="button" label="Search" (click)="performSearch(searchTerm.value)"></button>
-            <input type="text" pInputText placeholder="Enter Search Term" #searchTerm/>         
+            <button pButton type="button" label="Search" 
+            (click)="performSearch(searchTerm.value)" 
+            ></button>
+            <input type="text" pInputText placeholder="Enter Search Term" #searchTerm             
+            (keyup.enter)="performSearch(searchTerm.value)" 
+            (blur)="performSearch(searchTerm.value)" 
+            />         
         </div>
     </div>
   </div>
 </div>
 
-<div *ngIf="tenPhotos.length > 1">
-  <button pButton type="button" label='Reset' (click)="resetBoxes"></button>
-</div>
-
 <div class='listContainer'>
   <div class='photoList'>
     <div *ngFor='let photo of tenPhotos'>
-      <div class='photoCard'>
-          <p class='index'>Photo {{photo.index + 1}}</p>
+      <div class='photoCard dropzone'>
+          <p class='index'>Photo {{photo.index}}</p>
           <img src='https://farm{{photo.farm}}.staticflickr.com/{{photo.server}}/{{photo.id}}_{{photo.secret}}.jpg'/>
       </div>
     </div>
   </div>
   
 <div class='titleList'>
-    <ul *ngFor='let title of tenPhotosTitles'>
-        <li class='picture-title box' appDraggable>
+    <ul>
+        <li *ngFor='let title of tenPhotosTitles' class='picture-title box' appMoveable appDroppable>
               {{title.title}}
-              <div class="picture-title box helper" *appDraggableHelper>
-                  {{title.title}}
-              </div>
+              <input type="number" placeholder="Enter Photo Number" #matchNumber (click)="addTitlesGuess(matchNumber.value, title.index)"
+              (keyup)="addTitlesGuess(matchNumber.value, title.index)">
         </li>
     </ul>
+
+    <input *ngIf="tenPhotosTitles.length>1" type="submit" value="Submit" (click)="submitTitlesGuess()">
 </div>
 
 

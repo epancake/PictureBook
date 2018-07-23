@@ -1,5 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
 import { ApiCallService } from './api-call.service';
+
+function remove(item: string, list: string[]) {
+  if (list.indexOf(item) !== -1) {
+    list.splice(list.indexOf(item), 1);
+  }
+}
 
 @Component({
   selector: 'app-root',
@@ -11,6 +17,10 @@ export class AppComponent {
   title = 'Picture Book';
   tenPhotos = [];
   tenPhotosTitles = [];
+  currentBox?: string;
+  guess = {};
+
+  @Output() tenPhotosTitlesArray = this.tenPhotosTitles;
 
   constructor(
     private apiCallService: ApiCallService) { }
@@ -29,15 +39,33 @@ export class AppComponent {
     );
   }
 
-  onDragStart(event: PointerEvent): void {
-    console.log('got drag start');
+
+  move(box: string, toList: string[]): void {
+    remove(box, this.tenPhotosTitles);
+    remove(box, this.tenPhotos);
+    remove(box, this.tenPhotos);
+
+    toList.push(box);
   }
 
-  onDragMove(event: PointerEvent): void {
-    console.log(`got drag move ${Math.round(event.clientX)} ${Math.round(event.clientY)}`);
+  addTitlesGuess(matchGuess, oldTitle): void {
+    console.log('mo', matchGuess, oldTitle);
+    this.guess[oldTitle] = parseInt(matchGuess, 10);
+    console.log('guess', this.guess);
   }
 
-  onDragEnd(event: PointerEvent): void {
-    console.log('got drag end');
+  submitTitlesGuess() {
+    console.log('submitted')
+    // tslint:disable-next-line:forin
+    for (const prop in this.guess) {
+      if (prop === this.guess[prop]) {
+        console.log(`obj.${prop} = ${this.guess[prop]}`)
+      }
+    }
+    // for (var prop in this.guess) {
+    //   if (this.guess.prop === this.guess[prop]) {
+    //     console.log("match", this.guess.prop, this.guess[prop])
+    //   }
+    }
   }
 }

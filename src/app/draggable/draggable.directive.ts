@@ -1,45 +1,54 @@
-import { Directive, EventEmitter, HostBinding, HostListener, Output, ViewContainerRef, ContentChild, ElementRef } from '@angular/core';
-import { DraggableHelperDirective } from './draggable-helper.directive';
-
+import { Directive, EventEmitter, HostBinding, HostListener, Output, ElementRef } from '@angular/core';
 
 @Directive({
-  selector: '[appDraggable]'
+  selector: '[appDraggable],[appDroppable]'
 })
 export class DraggableDirective {
   @HostBinding('class.draggable') draggable = true;
+
+  pointerId?: number;
+
+  // to trigger pointer-events polyfill
+  @HostBinding('attr.touch-action') touchAction = 'none';
 
   @Output() dragStart = new EventEmitter<PointerEvent>();
   @Output() dragMove = new EventEmitter<PointerEvent>();
   @Output() dragEnd = new EventEmitter<PointerEvent>();
 
-  constructor(public element: ElementRef) {}
-
-
   @HostBinding('class.dragging') dragging = false;
+
+  constructor(public element: ElementRef) {}
 
   @HostListener('pointerdown', ['$event'])
   onPointerDown(event: PointerEvent): void {
+    if (event.button !== 0) {
+      return;
+    }
+
+    this.pointerId = event.pointerId;
+
     this.dragging = true;
-    event.stopPropagation();
     this.dragStart.emit(event);
   }
 
   @HostListener('document:pointermove', ['$event'])
   onPointerMove(event: PointerEvent): void {
-    if (!this.dragging) {
+    if (!this.dragging || event.pointerId !== this.pointerId) {
       return;
     }
+
     this.dragMove.emit(event);
   }
 
+  // added after YouTube video: pointercancel
+  @HostListener('document:pointercancel', ['$event'])
   @HostListener('document:pointerup', ['$event'])
   onPointerUp(event: PointerEvent): void {
-    if (!this.dragging) {
+    if (!this.dragging || event.pointerId !== this.pointerId) {
       return;
     }
+
     this.dragging = false;
     this.dragEnd.emit(event);
-    // this.helper.onDragEnd();
   }
-
 }

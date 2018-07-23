@@ -1,7 +1,3 @@
-img {
-    height: 25vh;
-}
-
 .photoList {
     display: flex;
     justify-content: space-around;
@@ -10,15 +6,20 @@ img {
 
 .index {
     height: auto;
-    text-align: center
+    text-align: center;
+    margin: 0 0 10px 0;
 }
 
 .photoCard {
-    max-width: 15rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    height: 38vh;
+    height: auto;
+}
+
+img {
+    width: 12rem;
+    height: auto;
 }
 
 .listContainer {
@@ -36,14 +37,37 @@ img {
 .box {
     background: #BADA55;
     border: 1px solid black;
-    padding: 10px 20px;
+    padding: 5px 20px;
     display: inline-block;
     cursor: move;
   
     &.dragging {
       background: coral;
     }
-  }
+
+    &.sortable.dragging {
+        background: none;
+        border: 1px dashed black;
+        color: transparent;
+    }
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropzone {
+    padding: 1em;
+    background: lightgray;
+    border: 1px solid black;
+    height: 360px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-bottom: .24em;
+}
+
 
 
 
